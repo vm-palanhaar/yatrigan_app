@@ -1,3 +1,4 @@
+import 'package:yatrigan/src/model/main/ir/ir_grp_list_model.dart';
 import 'package:yatrigan/src/model/main/ir/ir_station_shop_details_model.dart';
 import 'package:yatrigan/src/model/main/ir/ir_shop_inv_list_model.dart';
 import 'package:yatrigan/src/model/main/ir/ir_shop_list_model.dart';
@@ -18,4 +19,7 @@ class IrCtrlModel {
   List<IrShopInvListModel> irStationShopInvList = [];
 
   IrStationShopDetailsModel? irStationShopDetails;
+
+  List<IrGrpListModel> irGrpList = [];
+
 }

@@ -61,4 +61,15 @@ class IrCtrl extends ChangeNotifier with IrCtrlModel {
     );
     notifyListeners();
   }
+
+  Future<void> getGrpListApi({
+    required BuildContext context,
+  }) async {
+    irGrpList = await _api.getGrpListApi(
+      context: context,
+      showError: true,
+    );
+    _errorMsgApi();
+    notifyListeners();
+  }
 }

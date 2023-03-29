@@ -5,6 +5,7 @@ const String baseUrlApiIrV1 = '$baseUrlApi/ir/v1';
 const String baseUrlApiIrYatriganV1 = '$baseUrlApiIrV1/yatrigan';
 
 String irStationListUriV1 = '$baseUrlApiIrV1/station/';
+String irGrpListUriV1 = '$baseUrlApiIrV1/grp/';
 String irShopListUriV1 = '$baseUrlApiIrYatriganV1/station/<station>/shop/';
 String irShopInvListUriV1 = '$baseUrlApiIrYatriganV1/station/<station>/shop/<shopId>/inv/';
 String irShopDetailsUriV1 = '$baseUrlApiIrYatriganV1/station/<station>/shop/<shopId>/';
