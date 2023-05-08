@@ -10,6 +10,10 @@ import 'package:yatrigan/src/model/main/ir/ir_shop_inv_list_model.dart';
 import 'package:yatrigan/src/model/main/ir/ir_shop_list_model.dart';
 import 'package:yatrigan/src/model/main/ir/ir_station_list_model.dart';
 import 'package:yatrigan/src/model/main/ir/ir_station_shop_details_model.dart';
+import 'package:yatrigan/src/model/main/ir/ir_train_list.dart';
+import 'package:yatrigan/src/model/main/ir/ir_train_station_list.dart';
+import 'package:yatrigan/src/model/main/ir/trainschedule/train_schedule.dart';
+import 'package:yatrigan/src/model/main/ir/trainschedule/train_schedule_station.dart';
 
 class IrCtrlApi extends HandleErrorsApi {
   bool error = false;
@@ -188,5 +192,106 @@ class IrCtrlApi extends HandleErrorsApi {
       }
     }
     return list;
+  }
+
+  Future<List<IrTrainListModel>> getTrainListApi({
+    required BuildContext context,
+    required bool showError,
+  }) async {
+    List<IrTrainListModel> list = [];
+    error = false;
+    super.context = context;
+    super.errorMessage = '';
+    bool internet = await noInternetConnectivity(
+      showError: showError,
+    );
+    if (internet) {
+      var response = await http.get(
+        Uri.parse(irTrainListUriV1),
+      );
+      HttpStatusAction? action = httpStatus[response.statusCode];
+      var responseDecode = jsonDecode(response.body);
+      if (resAction[action] == ResAction.success) {
+        var responseData = responseDecode['data'] as List;
+        list = responseData
+            .map<IrTrainListModel>((json) => IrTrainListModel.fromJson(json))
+            .toList();
+      } else {
+        error = true;
+        handleErrorApi(
+          response: responseDecode,
+          action: action,
+        );
+      }
+    }
+    return list;
+  }
+
+  Future<TrainStationList?> getTrainStationListApi({
+    required BuildContext context,
+    required bool showError,
+    required String train,
+  }) async {
+    TrainStationList? tranStList;
+    error = false;
+    super.context = context;
+    super.errorMessage = '';
+    bool internet = await noInternetConnectivity(
+      showError: showError,
+    );
+    if (internet) {
+      var response = await http.get(
+        Uri.parse(irTrainStationListUriV1),
+        headers: {
+          'train': train,
+        },
+      );
+      HttpStatusAction? action = httpStatus[response.statusCode];
+      var responseDecode = jsonDecode(response.body);
+      if (resAction[action] == ResAction.success) {
+        tranStList = TrainStationList.fromJson(responseDecode['data']);
+      } else {
+        error = true;
+        handleErrorApi(
+          response: responseDecode,
+          action: action,
+        );
+      }
+    }
+    return tranStList;
+  }
+
+  Future<TrainSchedule?> getTrainScheduleApi({
+    required BuildContext context,
+    required bool showError,
+    required String train,
+  }) async {
+    TrainSchedule? trainSc;
+    error = false;
+    super.context = context;
+    super.errorMessage = '';
+    bool internet = await noInternetConnectivity(
+      showError: showError,
+    );
+    if (internet) {
+      var response = await http.get(
+        Uri.parse(irTrainScheduleUriV1),
+        headers: {
+          'train': train,
+        },
+      );
+      HttpStatusAction? action = httpStatus[response.statusCode];
+      var responseDecode = jsonDecode(response.body);
+      if (resAction[action] == ResAction.success) {
+        trainSc = TrainSchedule.fromJson(responseDecode['data']);
+      } else {
+        error = true;
+        handleErrorApi(
+          response: responseDecode,
+          action: action,
+        );
+      }
+    }
+    return trainSc;
   }
 }

@@ -8,6 +8,8 @@ import 'package:yatrigan/src/view/util/color_schemes.g.dart';
 import 'screens/ir_home_screen.dart';
 import 'screens/ir_station_shop_details_screen.dart';
 import 'screens/ir_station_shop_inv_list_screen.dart';
+import 'screens/train_track_screen.dart';
+import 'screens/train_schedule_screen.dart';
 
 class IrNavigateView extends StatelessWidget {
   const IrNavigateView({Key? key}) : super(key: key);
@@ -18,7 +20,9 @@ class IrNavigateView extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<IrCtrl>(
-          create: (context) => IrCtrl(),
+          create: (context) => IrCtrl(
+            context: context,
+          ),
         ),
         ChangeNotifierProvider<PcCtrl>(
           create: (context) => PcCtrl(),
@@ -30,6 +34,8 @@ class IrNavigateView extends StatelessWidget {
         initialRoute: IrHomeScreen.id,
         routes: {
           IrHomeScreen.id: (context) => const IrHomeScreen(),
+          TrainTrackScreen.id: (context) => const TrainTrackScreen(),
+          TrainScheduleScreen.id: (context) => const TrainScheduleScreen(),
           IrStationShopInvListScreen.id: (context) =>
               const IrStationShopInvListScreen(),
           ProductDetailsScreen.id: (context) => const ProductDetailsScreen(),

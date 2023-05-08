@@ -76,6 +76,8 @@ class _IrStationShopInvListScreenState
                   ),
                 ),
                 ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
                   itemCount: consumer.irStationShopInvList.length,
                   itemBuilder: (context, index) {
                     IrShopInvListModel invProd =

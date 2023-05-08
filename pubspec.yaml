@@ -29,3 +29,5 @@ flutter:
   uses-material-design: true
   assets:
     - images/
+    - images/main/home/
+    - images/main/indianrailways/

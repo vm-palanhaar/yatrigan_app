@@ -5,6 +5,14 @@ import 'ir_ctrl_model.dart';
 
 class IrCtrl extends ChangeNotifier with IrCtrlModel {
   final IrCtrlApi _api = IrCtrlApi();
+  final BuildContext context;
+
+  IrCtrl({
+    required this.context,
+  }) {
+    getRailwayStationListApi(context: context);
+    getTrainListApi(context: context);
+  }
 
   void _errorMsgApi() {
     if (_api.error) {
@@ -68,6 +76,41 @@ class IrCtrl extends ChangeNotifier with IrCtrlModel {
     irGrpList = await _api.getGrpListApi(
       context: context,
       showError: true,
+    );
+    _errorMsgApi();
+    notifyListeners();
+  }
+
+  Future<void> getTrainListApi({
+    required BuildContext context,
+  }) async {
+    irTrainList = await _api.getTrainListApi(
+      context: context,
+      showError: true,
+    );
+    _errorMsgApi();
+    notifyListeners();
+  }
+
+  Future<void> getTrainStationListApi({
+    required BuildContext context,
+  }) async {
+    trainStationList = await _api.getTrainStationListApi(
+      context: context,
+      showError: true,
+      train: train,
+    );
+    _errorMsgApi();
+    notifyListeners();
+  }
+
+  Future<void> getTrainScheduleApi({
+    required BuildContext context,
+  }) async {
+    trainSchedule = await _api.getTrainScheduleApi(
+      context: context,
+      showError: true,
+      train: train,
     );
     _errorMsgApi();
     notifyListeners();

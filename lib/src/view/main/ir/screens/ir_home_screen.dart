@@ -29,12 +29,12 @@ class _IrHomeScreenState extends State<IrHomeScreen> {
           bottom: const TabBar(
             tabs: <Widget>[
               Tab(
-                icon: Icon(Icons.question_answer_rounded),
-                text: 'Enquiry',
-              ),
-              Tab(
                 icon: Icon(Icons.food_bank),
                 text: 'Retail',
+              ),
+              Tab(
+                icon: Icon(Icons.train),
+                text: 'Train',
               ),
               Tab(
                 icon: Icon(Icons.help),
@@ -92,8 +92,8 @@ class _IrHomeScreenState extends State<IrHomeScreen> {
         ),
         body: const TabBarView(
           children: <Widget>[
-            IrHomeEnquiryOptionsTabScreen(),
             IrHomeRetailOptionsTabScreen(),
+            IrHomeEnquiryOptionsTabScreen(),
             IrHomeHelpOptionsTabScreen(),
           ],
         ),
