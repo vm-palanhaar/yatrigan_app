@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -13,7 +15,6 @@ import 'package:yatrigan/src/model/main/ir/ir_station_shop_details_model.dart';
 import 'package:yatrigan/src/model/main/ir/ir_train_list.dart';
 import 'package:yatrigan/src/model/main/ir/ir_train_station_list.dart';
 import 'package:yatrigan/src/model/main/ir/trainschedule/train_schedule.dart';
-import 'package:yatrigan/src/model/main/ir/trainschedule/train_schedule_station.dart';
 
 class IrCtrlApi extends HandleErrorsApi {
   bool error = false;
@@ -30,9 +31,19 @@ class IrCtrlApi extends HandleErrorsApi {
       showError: showError,
     );
     if (internet) {
-      var response = await http.get(
-        Uri.parse(irStationListUriV1),
-      );
+      http.Response? response;
+      try {
+        response = await http
+            .get(
+              Uri.parse(irStationListUriV1),
+            )
+            .timeout(
+              const Duration(seconds: 1),
+            );
+      } on TimeoutException catch (_) {
+        log('Please try again railway station');
+        return list;
+      }
       HttpStatusAction? action = httpStatus[response.statusCode];
       var responseDecode = jsonDecode(response.body);
       if (resAction[action] == ResAction.success) {
@@ -206,9 +217,19 @@ class IrCtrlApi extends HandleErrorsApi {
       showError: showError,
     );
     if (internet) {
-      var response = await http.get(
-        Uri.parse(irTrainListUriV1),
-      );
+      http.Response? response;
+      try {
+        response = await http
+            .get(
+              Uri.parse(irTrainListUriV1),
+            )
+            .timeout(
+              const Duration(seconds: 1),
+            );
+      } on TimeoutException catch (_) {
+        log('Please try again train');
+        return list;
+      }
       HttpStatusAction? action = httpStatus[response.statusCode];
       var responseDecode = jsonDecode(response.body);
       if (resAction[action] == ResAction.success) {
