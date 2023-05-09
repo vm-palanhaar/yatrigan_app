@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:yatrigan/src/controller/main/ir/ir_ctrl.dart';
 import 'package:yatrigan/src/view/main/ir/screens/train_track_screen.dart';
 import 'package:yatrigan/src/view/main/ir/widgets/train_search_widget.dart';
+import 'package:yatrigan/src/view/widgets/animations/carousel_image.dart';
 
 class IrHomeEnquiryOptionsTabScreen extends StatelessWidget {
   const IrHomeEnquiryOptionsTabScreen({Key? key}) : super(key: key);
@@ -26,6 +27,13 @@ class IrHomeEnquiryOptionsTabScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              const CarouselImage(
+                children: [
+                  'images/main/indianrailways/obaord_train_station_info.png',
+                  'images/main/indianrailways/track_your_train.png',
+                  'images/main/indianrailways/train_schedule.png',
+                ],
+              ),
               const ListTile(
                 title: Text('Track Your Train / Train Schedule'),
               ),

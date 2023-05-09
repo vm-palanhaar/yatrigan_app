@@ -45,10 +45,13 @@ class RailwayStationSearchWidget extends StatelessWidget {
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.train),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(
+                    MediaQuery.of(context).size.width * 0.05,
+                  ),
                 ),
                 contentPadding: EdgeInsets.symmetric(
                   vertical: MediaQuery.of(context).size.height * 0.02,
+                  horizontal: MediaQuery.of(context).size.width * 0.01,
                 ),
                 labelText: 'Railway Station',
               ),

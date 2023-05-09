@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:yatrigan/src/view/main/ir/tabs/ir_home_equiry_options_tab_screen.dart';
 import 'package:yatrigan/src/view/main/ir/tabs/ir_home_help_options_tab_screen.dart';
 import 'package:yatrigan/src/view/main/ir/tabs/ir_home_retail_options_tab_screen.dart';
@@ -23,18 +24,18 @@ class _IrHomeScreenState extends State<IrHomeScreen> {
           actions: [
             IconButton(
               onPressed: () {},
-              icon: const Icon(Icons.train_rounded),
+              icon: const Icon(FontAwesomeIcons.train),
             ),
           ],
           bottom: const TabBar(
             tabs: <Widget>[
               Tab(
-                icon: Icon(Icons.food_bank),
-                text: 'Retail',
+                icon: Icon(FontAwesomeIcons.train),
+                text: 'Train',
               ),
               Tab(
-                icon: Icon(Icons.train),
-                text: 'Train',
+                icon: Icon(FontAwesomeIcons.artstation),
+                text: 'Station',
               ),
               Tab(
                 icon: Icon(Icons.help),
@@ -92,8 +93,8 @@ class _IrHomeScreenState extends State<IrHomeScreen> {
         ),
         body: const TabBarView(
           children: <Widget>[
-            IrHomeRetailOptionsTabScreen(),
             IrHomeEnquiryOptionsTabScreen(),
+            IrHomeRetailOptionsTabScreen(),
             IrHomeHelpOptionsTabScreen(),
           ],
         ),
