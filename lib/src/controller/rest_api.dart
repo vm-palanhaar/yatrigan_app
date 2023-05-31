@@ -1,19 +1,46 @@
 const String baseUrlApi = 'http://192.168.29.176:8000/api';
 
-//---Indian Railways-PROD---
+//---UserApp---
+enum UserApiUri {
+  //PROD
+  register(uri: '$baseUrlApi/user/v1/register/'),
+  login(uri: '$baseUrlApi/user/v1/login/'),
+  profileInfo(uri: '$baseUrlApi/user/v1/profile/'),
+  logout(uri: '$baseUrlApi/user/v1/logout/'),
+  logoutAll(uri: '$baseUrlApi/user/v1/logout/all/'),
+  //DEV
+  doNotUse(uri: '');
+
+  const UserApiUri({
+    required this.uri,
+  });
+
+  final String uri;
+}
+
+//---IndianRailwaysApp---
 const String baseUrlApiIrV1 = '$baseUrlApi/ir/v1';
-const String baseUrlApiIrYatriganV1 = '$baseUrlApiIrV1/yatrigan';
+const String baseUrlApiIrAppV1 = '$baseUrlApiIrV1/yatrigan';
 
-String irStationListUriV1 = '$baseUrlApiIrV1/station/';
-String irTrainListUriV1 = '$baseUrlApiIrV1/trainList/';
-String irTrainScheduleUriV1 = '$baseUrlApiIrV1/trainSchedule/';
-String irTrainStationListUriV1 = '$baseUrlApiIrV1/trainStationList/';
-String irGrpListUriV1 = '$baseUrlApiIrV1/grp/';
-String irShopListUriV1 = '$baseUrlApiIrYatriganV1/station/<station>/shop/';
-String irShopInvListUriV1 = '$baseUrlApiIrYatriganV1/station/<station>/shop/<shopId>/inv/';
-String irShopDetailsUriV1 = '$baseUrlApiIrYatriganV1/station/<station>/shop/<shopId>/';
-//---Indian Railways-DEV---
+enum IrApiUri {
+  //PROD
+  railStations(uri: '$baseUrlApi/station/'),
+  trains(uri: '$baseUrlApiIrAppV1/trainList/'),
+  trainSchedule(uri: '$baseUrlApiIrAppV1/trainSchedule/'),
+  grp(uri: '$baseUrlApiIrAppV1/grp/'),
+  stationShops(uri: '$baseUrlApiIrAppV1/station/<station>/shop/'),
+  stationShopInv(
+      uri: '$baseUrlApiIrAppV1/station/<station>/shop/<shopId>/inv/'),
+  stationShopInfo(uri: '$baseUrlApiIrAppV1/station/<station>/shop/<shopId>/'),
+  //DEV
+  doNotUse(uri: '');
 
+  const IrApiUri({
+    required this.uri,
+  });
+
+  final String uri;
+}
 
 //---ProductCatalog-PROD---
 const String baseUrlApiPcV1 = '$baseUrlApi/pc/v1';

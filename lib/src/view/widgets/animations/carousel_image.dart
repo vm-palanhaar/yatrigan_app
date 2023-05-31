@@ -17,9 +17,21 @@ class _CarouselImageState extends State<CarouselImage>
   late Animation animation;
   List<Widget> trackImg = [];
   int index = 0;
+  //List<Widget> circleTrackImg = [];
+/*  final Map<String, double> imgHgt = {
+    'Screen': 0.23,
+    'Dialog': 0.18,
+  };*/
 
   @override
   void initState() {
+    // for (int i = 0; i < widget.children.length; i++) {
+    //   circleTrackImg.add(
+    //     CircleAvatar(
+    //       radius: MediaQuery.of(context).size.width * 0.02,
+    //     ),
+    //   );
+    // }
     super.initState();
     controller =
         AnimationController(duration: const Duration(seconds: 5), vsync: this);
@@ -51,33 +63,39 @@ class _CarouselImageState extends State<CarouselImage>
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: AlignmentDirectional.bottomCenter,
-      children: [
-        Image.asset(
-          widget.children.elementAt(index),
-        ),
-        Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: MediaQuery.of(context).size.width * 0.3,
-            vertical: MediaQuery.of(context).size.height * 0.01,
+    return Container(
+      margin: EdgeInsets.symmetric(
+        vertical: MediaQuery.of(context).size.height * 0.02,
+      ),
+      child: Stack(
+        alignment: AlignmentDirectional.bottomCenter,
+        children: [
+          Container(
+            height:
+                MediaQuery.of(context).size.height * 0.23,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                  widget.children.elementAt(index),
+                ),
+                fit: BoxFit.fitWidth,
+              ),
+              borderRadius: BorderRadius.circular(12),
+            ),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              CircleAvatar(
-                radius: MediaQuery.of(context).size.width * 0.02,
-              ),
-              CircleAvatar(
-                radius: MediaQuery.of(context).size.width * 0.02,
-              ),
-              CircleAvatar(
-                radius: MediaQuery.of(context).size.width * 0.02,
-              ),
-            ],
+          Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: MediaQuery.of(context).size.width * 0.3,
+              vertical: MediaQuery.of(context).size.height * 0.01,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

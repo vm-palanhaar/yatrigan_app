@@ -1,5 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:yatrigan/src/view/error/conn_tout_screen.dart';
+import 'package:yatrigan/src/view/error/internet_screen.dart';
 
 import 'http_status_code.dart';
 
@@ -11,11 +15,11 @@ class HandleErrorsApi {
 
   Future<void> handleErrorApi(
       {required Map<String, dynamic> response,
-        required HttpStatusAction? action}) async {
+      required HttpStatusAction? action}) async {
     switch (action) {
       case HttpStatusAction.ok:
         errorMessage = '';
-        if(response.containsKey('error')){
+        if (response.containsKey('error')) {
           errorMessage = '${response['error']}';
         }
         //Success
@@ -66,7 +70,6 @@ class HandleErrorsApi {
 
   void unAuthorizedAccess401(BuildContext context) {
     this.context = context;
-
     _showErrorDialog('You have been logged out!');
   }
 
@@ -75,8 +78,14 @@ class HandleErrorsApi {
     _showErrorDialog(error);
   }
 
-  void internalServerError500() {
-    //Do Nothing
+  void connectTimeOut({
+    required String error,
+    required bool show,
+  }) {
+    log(error);
+    if (show) {
+      Navigator.pushNamed(context!, ConnToutScreen.id);
+    }
   }
 
   Future<bool> noInternetConnectivity({required bool showError}) async {
@@ -87,7 +96,7 @@ class HandleErrorsApi {
     } else if (connectivityResult == ConnectivityResult.ethernet) {
     } else if (connectivityResult == ConnectivityResult.none) {
       if (showError) {
-        _showErrorDialog('No internet connectivity.');
+        Navigator.pushNamed(context!, InternetScreen.id);
       }
       return false;
     }

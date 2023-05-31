@@ -8,8 +8,6 @@ import 'package:yatrigan/src/controller/rest_api.dart';
 import 'package:yatrigan/src/model/main/product/product_details_model.dart';
 
 class PcCtrlApi extends HandleErrorsApi {
-  late String _token = '';
-  void setToken(String token) => _token = token;
 
   bool error = false;
 
