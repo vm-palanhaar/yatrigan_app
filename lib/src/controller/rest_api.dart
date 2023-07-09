@@ -1,4 +1,4 @@
-const String baseUrlApi = 'http://192.168.29.176:8000/api';
+const String baseUrlApi = 'http://stg01.palanhaar.in/api';
 
 //---UserApp---
 enum UserApiUri {
@@ -24,14 +24,15 @@ const String baseUrlApiIrAppV1 = '$baseUrlApiIrV1/yatrigan';
 
 enum IrApiUri {
   //PROD
-  railStations(uri: '$baseUrlApi/station/'),
-  trains(uri: '$baseUrlApiIrAppV1/trainList/'),
-  trainSchedule(uri: '$baseUrlApiIrAppV1/trainSchedule/'),
-  grp(uri: '$baseUrlApiIrAppV1/grp/'),
-  stationShops(uri: '$baseUrlApiIrAppV1/station/<station>/shop/'),
+  railStations(uri: '$baseUrlApiIrV1/station'),
+  trains(uri: '$baseUrlApiIrAppV1/trainList'),
+  trainSchedule(uri: '$baseUrlApiIrAppV1/trainSchedule'),
+  helpline(uri: '$baseUrlApiIrV1/helpline'),
+  helplineGrp(uri: '$baseUrlApiIrV1/helpline/grp'),
+  stationShops(uri: '$baseUrlApiIrAppV1/station/<station>/shop'),
   stationShopInv(
-      uri: '$baseUrlApiIrAppV1/station/<station>/shop/<shopId>/inv/'),
-  stationShopInfo(uri: '$baseUrlApiIrAppV1/station/<station>/shop/<shopId>/'),
+      uri: '$baseUrlApiIrAppV1/station/<station>/shop/<shopId>/inv'),
+  stationShopInfo(uri: '$baseUrlApiIrAppV1/station/<station>/shop/<shopId>'),
   //DEV
   doNotUse(uri: '');
 

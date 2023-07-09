@@ -23,13 +23,10 @@ class _IrRailStationShopsTabScreenState
   }
 
   Future<void> getRailStationShopsApi() async {
-    if (Provider.of<IrCtrl>(context, listen: false).irShops == null ||
-        Provider.of<IrCtrl>(context, listen: false).irShops!.station !=
-            Provider.of<IrCtrl>(context, listen: false).railStationCode) {
-      await Provider.of<IrCtrl>(context, listen: false).getRailStationShopsApi(
-        context: context,
-      );
-    }
+    await Provider.of<IrCtrl>(context, listen: false).getRailStationShopsApi(
+      context: context,
+    );
+    setState(() {});
   }
 
   Future<void> onRefresh() async {
@@ -50,6 +47,7 @@ class _IrRailStationShopsTabScreenState
           child: Consumer<IrCtrl>(
             builder: (context, controller, _) {
               if (controller.irShops != null) {
+                print(controller.irShops!.station);
                 if (controller.irShops!.station == controller.railStationCode) {
                   if (controller.irShops!.shops.isNotEmpty) {
                     return ListView.builder(

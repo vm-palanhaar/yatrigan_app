@@ -1,4 +1,5 @@
-import 'package:yatrigan/src/model/main/ir/ir_grp_list_model.dart';
+import 'package:yatrigan/src/model/main/ir/helpline/ir_helpline_grp_mdl.dart';
+import 'package:yatrigan/src/model/main/ir/helpline/ir_helpline_mdl.dart';
 import 'package:yatrigan/src/model/main/ir/railstation/shop/ir_shop_inv_mdl.dart';
 import 'package:yatrigan/src/model/main/ir/railstation/shop/ir_shop_info_mdl.dart';
 import 'package:yatrigan/src/model/main/ir/railstation/ir_shops_mdl.dart';
@@ -31,7 +32,9 @@ class IrCtrlModel {
 
   IrShopInfoMdl? irShopInfo;
 
-  List<IrGrpListModel> irGrpList = [];
+  List<IrHelplineGrpMdl> irHelplinesGrp = [];
+
+  List<IrHelplineMdl> irHelplines = [];
 
   TrainSchedule? trainSchedule;
 }

@@ -4,7 +4,6 @@ import 'package:yatrigan/src/controller/main/ir/ir_ctrl.dart';
 import 'package:yatrigan/src/model/main/ir/trainschedule/train_schedule_station.dart';
 import 'package:yatrigan/src/view/main/ir/widgets/train/train_schedule_station_widget.dart';
 import 'package:yatrigan/src/view/util/enum_icons.dart';
-import 'package:yatrigan/src/view/widgets/animations/carousel_image.dart';
 import 'package:yatrigan/src/view/widgets/fields/calendar_widget.dart';
 
 class IrTrainTrackScheduleTabScreen extends StatefulWidget {

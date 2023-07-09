@@ -22,9 +22,9 @@ class _TrainSearchWidgetState extends State<TrainSearchWidget> {
   }
 
   Future getTrainsApi() async {
-    if (Provider.of<IrCtrl>(context, listen: false).irTrains.trains.isEmpty){
+    if (Provider.of<IrCtrl>(context, listen: false).irTrains.trains.isEmpty) {
       await Provider.of<IrCtrl>(context, listen: false)
-          .getTrainListApi(context: context);
+          .getTrainsApi(context: context);
     }
     setState(() {
       trains = Provider.of<IrCtrl>(context, listen: false).irTrains.trains;

@@ -10,8 +10,6 @@ import 'package:yatrigan/src/view/main/productcatalog/screens/product_details_sc
 import 'package:yatrigan/src/view/util/color_schemes.g.dart';
 
 import 'screens/ir_home_screen.dart';
-import 'tabs/railstation/shop/ir_shop_info_tab_screen.dart';
-import 'tabs/railstation/shop/ir_shop_inv_tab_screen.dart';
 import 'screens/ir_rail_station_screen.dart';
 
 class IrNavigateView extends StatelessWidget {

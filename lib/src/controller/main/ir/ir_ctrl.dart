@@ -83,7 +83,7 @@ class IrCtrl extends ChangeNotifier with IrCtrlModel {
     required BuildContext context,
   }) async {
     if (railStationCode.isNotEmpty) {
-      irShops = await _api.getRailStationShopsApi(
+      irShops = await _api.getShopsApi(
         context: context,
         showError: true,
         stationCode: railStationCode,
@@ -96,7 +96,7 @@ class IrCtrl extends ChangeNotifier with IrCtrlModel {
   Future<void> getRailStationShopInvApi({
     required BuildContext context,
   }) async {
-    irShopInv = await _api.getRailStationShopInvApi(
+    irShopInv = await _api.getShopInvApi(
       context: context,
       showError: true,
       shopId: irShop!.id,
@@ -109,7 +109,7 @@ class IrCtrl extends ChangeNotifier with IrCtrlModel {
   Future<void> getRailStationShopInfoApi({
     required BuildContext context,
   }) async {
-    irShopInfo = await _api.getRailStationShopInfoApi(
+    irShopInfo = await _api.getShopInfoApi(
       context: context,
       showError: true,
       stationCode: railStationCode,
@@ -118,10 +118,10 @@ class IrCtrl extends ChangeNotifier with IrCtrlModel {
     notifyListeners();
   }
 
-  Future<void> getGrpListApi({
+  Future<void> getHelplinesGrpApi({
     required BuildContext context,
   }) async {
-    irGrpList = await _api.getGrpListApi(
+    irHelplinesGrp = await _api.getHelplinesGrpApi(
       context: context,
       showError: true,
     );
@@ -129,7 +129,18 @@ class IrCtrl extends ChangeNotifier with IrCtrlModel {
     notifyListeners();
   }
 
-  Future<void> getTrainListApi({
+  Future<void> getHelplinesApi({
+    required BuildContext context,
+  }) async {
+    irHelplines = await _api.getHelplinesApi(
+      context: context,
+      showError: true,
+    );
+    _errorMsgApi();
+    notifyListeners();
+  }
+
+  Future<void> getTrainsApi({
     required BuildContext context,
   }) async {
     irTrains = await _api.getTrainsApi(

@@ -21,11 +21,10 @@ class IrShopsMdl {
   }
 
   factory IrShopsMdl.fail(Map<String, dynamic> json) {
-    List<String> list = List<String>.from(json['error'] as List);
     return IrShopsMdl(
       station: json["station"] as String,
       shops: [],
-      error: list.toString(),
+      error: json['error']['message'],
     );
   }
 }
