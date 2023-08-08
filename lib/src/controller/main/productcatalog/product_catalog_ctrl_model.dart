@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:yatrigan/src/model/main/product/product_details_model.dart';
 
-class PcCtrlModel {
+class PcCtrlModel extends ChangeNotifier{
   String errorMsg = '';
 
   //getProductDetailsApi

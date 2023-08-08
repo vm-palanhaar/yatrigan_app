@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -5,24 +6,23 @@ import 'package:http/http.dart' as http;
 import 'package:yatrigan/src/controller/handle_errors_api.dart';
 import 'package:yatrigan/src/controller/http_status_code.dart';
 import 'package:yatrigan/src/controller/rest_api.dart';
-import 'package:yatrigan/src/model/main/ir/ir_grp_list_model.dart';
-import 'package:yatrigan/src/model/main/ir/ir_shop_inv_list_model.dart';
-import 'package:yatrigan/src/model/main/ir/ir_shop_list_model.dart';
-import 'package:yatrigan/src/model/main/ir/ir_station_list_model.dart';
-import 'package:yatrigan/src/model/main/ir/ir_station_shop_details_model.dart';
-import 'package:yatrigan/src/model/main/ir/ir_train_list.dart';
-import 'package:yatrigan/src/model/main/ir/ir_train_station_list.dart';
+import 'package:yatrigan/src/model/main/ir/helpline/ir_helpline_grp_mdl.dart';
+import 'package:yatrigan/src/model/main/ir/helpline/ir_helpline_mdl.dart';
+import 'package:yatrigan/src/model/main/ir/railstation/shop/ir_shop_inv_mdl.dart';
+import 'package:yatrigan/src/model/main/ir/railstation/ir_shops_mdl.dart';
+import 'package:yatrigan/src/model/main/ir/rail_stations_mdl.dart';
+import 'package:yatrigan/src/model/main/ir/railstation/shop/ir_shop_info_mdl.dart';
+import 'package:yatrigan/src/model/main/ir/trains_mdl.dart';
 import 'package:yatrigan/src/model/main/ir/trainschedule/train_schedule.dart';
-import 'package:yatrigan/src/model/main/ir/trainschedule/train_schedule_station.dart';
 
 class IrCtrlApi extends HandleErrorsApi {
   bool error = false;
 
-  Future<List<IrStationListModel>> getRailwayStationListApi({
+  Future<RailStationsMdl> getRailStationsApi({
     required BuildContext context,
     required bool showError,
   }) async {
-    List<IrStationListModel> list = [];
+    RailStationsMdl stations = RailStationsMdl(stations: []);
     error = false;
     super.context = context;
     super.errorMessage = '';
@@ -30,17 +30,26 @@ class IrCtrlApi extends HandleErrorsApi {
       showError: showError,
     );
     if (internet) {
-      var response = await http.get(
-        Uri.parse(irStationListUriV1),
-      );
+      http.Response? response;
+      try {
+        response = await http
+            .get(
+              Uri.parse(IrApiUri.railStations.uri),
+            )
+            .timeout(
+              const Duration(seconds: 5),
+            );
+      } on TimeoutException catch (_) {
+        connectTimeOut(
+          error: 'conTout-getRailStationsApi',
+          show: showError,
+        );
+        return stations;
+      }
       HttpStatusAction? action = httpStatus[response.statusCode];
       var responseDecode = jsonDecode(response.body);
       if (resAction[action] == ResAction.success) {
-        var responseData = responseDecode['data'] as List;
-        list = responseData
-            .map<IrStationListModel>(
-                (json) => IrStationListModel.fromJson(json))
-            .toList();
+        stations = RailStationsMdl.fromJson(responseDecode);
       } else {
         error = true;
         handleErrorApi(
@@ -49,15 +58,15 @@ class IrCtrlApi extends HandleErrorsApi {
         );
       }
     }
-    return list;
+    return stations;
   }
 
-  Future<List<IrShopListModel>> getRailwayStationShopListApi({
+  Future<IrShopsMdl?> getShopsApi({
     required BuildContext context,
     required bool showError,
     required String stationCode,
   }) async {
-    List<IrShopListModel> list = [];
+    IrShopsMdl? shops;
     error = false;
     super.context = context;
     super.errorMessage = '';
@@ -65,7 +74,7 @@ class IrCtrlApi extends HandleErrorsApi {
       showError: showError,
     );
     if (internet) {
-      String uri = irShopListUriV1;
+      String uri = IrApiUri.stationShops.uri;
       uri = uri.replaceAll("<station>", stationCode);
       var response = await http.get(
         Uri.parse(uri),
@@ -73,11 +82,9 @@ class IrCtrlApi extends HandleErrorsApi {
       HttpStatusAction? action = httpStatus[response.statusCode];
       var responseDecode = jsonDecode(response.body);
       if (resAction[action] == ResAction.success) {
-        var responseData = responseDecode['data'] as List;
-        list = responseData
-            .map<IrShopListModel>((json) => IrShopListModel.fromJson(json))
-            .toList();
+        shops = IrShopsMdl.success(responseDecode);
       } else {
+        shops = IrShopsMdl.fail(responseDecode);
         error = true;
         handleErrorApi(
           response: responseDecode,
@@ -85,23 +92,23 @@ class IrCtrlApi extends HandleErrorsApi {
         );
       }
     }
-    return list;
+    return shops;
   }
 
-  Future<List<IrShopInvListModel>> getRailwayStationShopInvListApi({
+  Future<IrShopInvMdl?> getShopInvApi({
     required BuildContext context,
     required bool showError,
     required String stationCode,
     required String shopId,
   }) async {
-    List<IrShopInvListModel> list = [];
+    IrShopInvMdl? shopInv;
     super.context = context;
     super.errorMessage = '';
     bool internet = await noInternetConnectivity(
       showError: showError,
     );
     if (internet) {
-      var uri = irShopInvListUriV1;
+      var uri = IrApiUri.stationShopInv.uri;
       uri = uri.replaceAll("<station>", stationCode);
       uri = uri.replaceAll("<shopId>", shopId);
       var response = await http.get(
@@ -110,29 +117,26 @@ class IrCtrlApi extends HandleErrorsApi {
       HttpStatusAction? action = httpStatus[response.statusCode];
       var responseDecode = jsonDecode(response.body);
       if (resAction[action] == ResAction.success) {
-        var responseData = responseDecode['data'] as List;
-        list = responseData
-            .map<IrShopInvListModel>(
-                (json) => IrShopInvListModel.fromJson(json))
-            .toList();
+        shopInv = IrShopInvMdl.success(responseDecode);
       } else {
         error = true;
+        shopInv = IrShopInvMdl.fail(responseDecode);
         handleErrorApi(
           response: responseDecode,
           action: action,
         );
       }
     }
-    return list;
+    return shopInv;
   }
 
-  Future<IrStationShopDetailsModel?> getRailwayStationShopDetailsApi({
+  Future<IrShopInfoMdl?> getShopInfoApi({
     required BuildContext context,
     required bool showError,
     required String stationCode,
     required String shopId,
   }) async {
-    IrStationShopDetailsModel? shop;
+    IrShopInfoMdl? shop;
     error = false;
     super.context = context;
     super.errorMessage = '';
@@ -140,7 +144,7 @@ class IrCtrlApi extends HandleErrorsApi {
       showError: showError,
     );
     if (internet) {
-      var uri = irShopDetailsUriV1;
+      var uri = IrApiUri.stationShopInfo.uri;
       uri = uri.replaceAll("<station>", stationCode);
       uri = uri.replaceAll("<shopId>", shopId);
       var response = await http.get(
@@ -149,7 +153,7 @@ class IrCtrlApi extends HandleErrorsApi {
       HttpStatusAction? action = httpStatus[response.statusCode];
       var responseDecode = jsonDecode(response.body);
       if (resAction[action] == ResAction.success) {
-        shop = IrStationShopDetailsModel.fromJson(responseDecode['data']);
+        shop = IrShopInfoMdl.fromJson(responseDecode);
       } else {
         error = true;
         handleErrorApi(
@@ -161,11 +165,11 @@ class IrCtrlApi extends HandleErrorsApi {
     return shop;
   }
 
-  Future<List<IrGrpListModel>> getGrpListApi({
+  Future<List<IrHelplineGrpMdl>> getHelplinesGrpApi({
     required BuildContext context,
     required bool showError,
   }) async {
-    List<IrGrpListModel> list = [];
+    List<IrHelplineGrpMdl> list = [];
     error = false;
     super.context = context;
     super.errorMessage = '';
@@ -174,14 +178,14 @@ class IrCtrlApi extends HandleErrorsApi {
     );
     if (internet) {
       var response = await http.get(
-        Uri.parse(irGrpListUriV1),
+        Uri.parse(IrApiUri.helplineGrp.uri),
       );
       HttpStatusAction? action = httpStatus[response.statusCode];
       var responseDecode = jsonDecode(response.body);
       if (resAction[action] == ResAction.success) {
-        var responseData = responseDecode['data'] as List;
+        var responseData = responseDecode as List;
         list = responseData
-            .map<IrGrpListModel>((json) => IrGrpListModel.fromJson(json))
+            .map<IrHelplineGrpMdl>((json) => IrHelplineGrpMdl.fromJson(json))
             .toList();
       } else {
         error = true;
@@ -194,11 +198,11 @@ class IrCtrlApi extends HandleErrorsApi {
     return list;
   }
 
-  Future<List<IrTrainListModel>> getTrainListApi({
+  Future<List<IrHelplineMdl>> getHelplinesApi({
     required BuildContext context,
     required bool showError,
   }) async {
-    List<IrTrainListModel> list = [];
+    List<IrHelplineMdl> list = [];
     error = false;
     super.context = context;
     super.errorMessage = '';
@@ -207,14 +211,14 @@ class IrCtrlApi extends HandleErrorsApi {
     );
     if (internet) {
       var response = await http.get(
-        Uri.parse(irTrainListUriV1),
+        Uri.parse(IrApiUri.helpline.uri),
       );
       HttpStatusAction? action = httpStatus[response.statusCode];
       var responseDecode = jsonDecode(response.body);
       if (resAction[action] == ResAction.success) {
-        var responseData = responseDecode['data'] as List;
+        var responseData = responseDecode as List;
         list = responseData
-            .map<IrTrainListModel>((json) => IrTrainListModel.fromJson(json))
+            .map<IrHelplineMdl>((json) => IrHelplineMdl.fromJson(json))
             .toList();
       } else {
         error = true;
@@ -227,12 +231,11 @@ class IrCtrlApi extends HandleErrorsApi {
     return list;
   }
 
-  Future<TrainStationList?> getTrainStationListApi({
+  Future<TrainsMdl> getTrainsApi({
     required BuildContext context,
     required bool showError,
-    required String train,
   }) async {
-    TrainStationList? tranStList;
+    TrainsMdl trains = TrainsMdl(trains: []);
     error = false;
     super.context = context;
     super.errorMessage = '';
@@ -240,16 +243,26 @@ class IrCtrlApi extends HandleErrorsApi {
       showError: showError,
     );
     if (internet) {
-      var response = await http.get(
-        Uri.parse(irTrainStationListUriV1),
-        headers: {
-          'train': train,
-        },
-      );
+      http.Response? response;
+      try {
+        response = await http
+            .get(
+              Uri.parse(IrApiUri.trains.uri),
+            )
+            .timeout(
+              const Duration(seconds: 10),
+            );
+      } on TimeoutException catch (_) {
+        connectTimeOut(
+          error: 'conTout-getTrainsApi',
+          show: showError,
+        );
+        return trains;
+      }
       HttpStatusAction? action = httpStatus[response.statusCode];
       var responseDecode = jsonDecode(response.body);
       if (resAction[action] == ResAction.success) {
-        tranStList = TrainStationList.fromJson(responseDecode['data']);
+        trains = TrainsMdl.fromJson(responseDecode);
       } else {
         error = true;
         handleErrorApi(
@@ -258,7 +271,7 @@ class IrCtrlApi extends HandleErrorsApi {
         );
       }
     }
-    return tranStList;
+    return trains;
   }
 
   Future<TrainSchedule?> getTrainScheduleApi({
@@ -275,7 +288,7 @@ class IrCtrlApi extends HandleErrorsApi {
     );
     if (internet) {
       var response = await http.get(
-        Uri.parse(irTrainScheduleUriV1),
+        Uri.parse(IrApiUri.trainSchedule.uri),
         headers: {
           'train': train,
         },
@@ -283,7 +296,7 @@ class IrCtrlApi extends HandleErrorsApi {
       HttpStatusAction? action = httpStatus[response.statusCode];
       var responseDecode = jsonDecode(response.body);
       if (resAction[action] == ResAction.success) {
-        trainSc = TrainSchedule.fromJson(responseDecode['data']);
+        trainSc = TrainSchedule.fromJson(responseDecode);
       } else {
         error = true;
         handleErrorApi(

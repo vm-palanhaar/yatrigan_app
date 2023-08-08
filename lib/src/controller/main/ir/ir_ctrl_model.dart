@@ -1,36 +1,41 @@
-import 'package:yatrigan/src/model/main/ir/ir_grp_list_model.dart';
-import 'package:yatrigan/src/model/main/ir/ir_station_shop_details_model.dart';
-import 'package:yatrigan/src/model/main/ir/ir_shop_inv_list_model.dart';
-import 'package:yatrigan/src/model/main/ir/ir_shop_list_model.dart';
-import 'package:yatrigan/src/model/main/ir/ir_station_list_model.dart';
-import 'package:yatrigan/src/model/main/ir/ir_train_list.dart';
-import 'package:yatrigan/src/model/main/ir/ir_train_station_list.dart';
+import 'package:flutter/material.dart';
+import 'package:yatrigan/src/model/main/ir/helpline/ir_helpline_grp_mdl.dart';
+import 'package:yatrigan/src/model/main/ir/helpline/ir_helpline_mdl.dart';
+import 'package:yatrigan/src/model/main/ir/railstation/shop/ir_shop_inv_mdl.dart';
+import 'package:yatrigan/src/model/main/ir/railstation/shop/ir_shop_info_mdl.dart';
+import 'package:yatrigan/src/model/main/ir/railstation/ir_shops_mdl.dart';
+import 'package:yatrigan/src/model/main/ir/rail_stations_mdl.dart';
+import 'package:yatrigan/src/model/main/ir/trains_mdl.dart';
 import 'package:yatrigan/src/model/main/ir/trainschedule/train_schedule.dart';
 
-class IrCtrlModel {
+class IrCtrlModel extends ChangeNotifier{
   String errorMsg = '';
 
-  List<IrStationListModel> irStationList = [];
+  RailStationsMdl railStations = RailStationsMdl(
+    stations: [],
+  );
+  String railStationCode = '';
+  String railStationName = '';
 
-  String stationCode = '';
-  IrStationListModel? railwayStation;
+  TrainsMdl irTrains = TrainsMdl(
+    trains: [],
+  );
+  String trainNo = '';
+  String trainName = '';
 
-  List<IrShopListModel> irStationShopList = [];
+  Set<String> trainsRs = {};
 
-  IrShopListModel? irStationShop;
+  IrShopsMdl? irShops;
 
-  List<IrShopInvListModel> irStationShopInvList = [];
+  IrShopMdl? irShop;
 
-  IrStationShopDetailsModel? irStationShopDetails;
+  IrShopInvMdl? irShopInv;
 
-  List<IrGrpListModel> irGrpList = [];
+  IrShopInfoMdl? irShopInfo;
 
-  List<IrTrainListModel> irTrainList = [];
+  List<IrHelplineGrpMdl> irHelplinesGrp = [];
 
-  String train = '';
-
-  TrainStationList? trainStationList;
+  List<IrHelplineMdl> irHelplines = [];
 
   TrainSchedule? trainSchedule;
-
 }

@@ -5,6 +5,7 @@ class ProductListModel {
   String _image;
   String _price;
   String _category;
+  String _nw;
 
   String get getId => _id;
   String get getBrand => _brand;
@@ -12,6 +13,7 @@ class ProductListModel {
   String get getImage => _image;
   String get getPrice => _price;
   String get getCategory => _category;
+  String get getNetWeight => _nw;
 
   ProductListModel(
     this._id,
@@ -20,6 +22,7 @@ class ProductListModel {
     this._image,
     this._price,
     this._category,
+    this._nw,
   );
 
   factory ProductListModel.fromJson(Map<String, dynamic> json) {
@@ -30,6 +33,7 @@ class ProductListModel {
       json["image"] as String,
       json["price"] as String,
       json["category"] as String,
+      json["weight"] as String,
     );
   }
 }
