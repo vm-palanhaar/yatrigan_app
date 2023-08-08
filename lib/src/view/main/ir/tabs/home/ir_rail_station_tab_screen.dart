@@ -13,14 +13,14 @@ class IrRailStationTabScreen extends StatelessWidget {
           horizontal: MediaQuery.of(context).size.width * 0.03,
           vertical: MediaQuery.of(context).size.height * 0.01,
         ),
-        child: SingleChildScrollView(
+        child: const SingleChildScrollView(
           child: Column(
-            children: const [
-              CarouselImage(
+            children:  [
+              /*CarouselImage(
                 children: [
                   'images/main/indianrailways/obaord_train_station_info.png',
                 ],
-              ),
+              ),*/
               RailStationSearchWidget(),
             ],
           ),

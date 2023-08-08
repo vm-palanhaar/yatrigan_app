@@ -1,4 +1,4 @@
-const String baseUrlApi = 'http://stg01.palanhaar.in/api';
+const String baseUrlApi = 'http://192.168.29.176:8000/api';
 
 //---UserApp---
 enum UserApiUri {

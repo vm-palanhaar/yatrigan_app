@@ -32,7 +32,7 @@ class TrainScheduleStationWidget extends StatelessWidget {
               alignment: AlignmentDirectional.topEnd,
               children: [
                 Card(
-                  color: const Color(0xffffc001),
+                  color: const Color(0xffffff01),
                   child: ListTile(
                     contentPadding: EdgeInsets.symmetric(
                       horizontal: MediaQuery.of(context).size.width * 0.02,
@@ -53,6 +53,7 @@ class TrainScheduleStationWidget extends StatelessWidget {
                           ),
                           Text(
                             station.station.split("-")[0].trim().toUpperCase(),
+                            textDirection: TextDirection.ltr,
                             style: const TextStyle(
                               color: Colors.black,
                             ),
@@ -100,7 +101,7 @@ class TrainScheduleStationWidget extends StatelessWidget {
                     vertical: MediaQuery.of(context).size.height * 0.01,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(0xffffc001),
+                    color: const Color(0xfffff001),
                     borderRadius: BorderRadius.all(
                       Radius.circular(MediaQuery.of(context).size.width * 0.02),
                     ),
@@ -134,7 +135,7 @@ class TrainScheduleStationWidget extends StatelessWidget {
                 vertical: MediaQuery.of(context).size.height * 0.01,
               ),
               decoration: BoxDecoration(
-                color: const Color(0xffffc001),
+                color: const Color(0xfffff001),
                 borderRadius: BorderRadius.all(
                   Radius.circular(MediaQuery.of(context).size.width * 0.02),
                 ),

@@ -32,7 +32,7 @@ class PcCtrlApi extends HandleErrorsApi {
       HttpStatusAction? action = httpStatus[response.statusCode];
       var responseDecode = jsonDecode(response.body);
       if (resAction[action] == ResAction.success) {
-        product = ProductDetailsModel.fromJson(responseDecode['data']);
+        product = ProductDetailsModel.fromJson(responseDecode);
       } else {
         error = true;
         handleErrorApi(

@@ -11,15 +11,27 @@ class IrRailStationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String stationName =
+        Provider.of<IrCtrl>(context, listen: false).railStationName;
+    String stationCode =
+        Provider.of<IrCtrl>(context, listen: false).railStationCode;
     return DefaultTabController(
       initialIndex: 0,
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
-            '${Provider.of<IrCtrl>(context, listen: false).railStationName} - ${Provider.of<IrCtrl>(context, listen: false).railStationCode}',
+          title: Row(
+            children: [
+              Image.asset(
+                'images/main/indianrailways/station_board.png',
+                height: MediaQuery.of(context).size.height * 0.04,
+              ),
+              Text(
+                ' $stationName - $stationCode',
+              ),
+            ],
           ),
-          bottom:  TabBar(
+          bottom: TabBar(
             tabs: <Widget>[
               Tab(
                 icon: Icon(IrIcon.stationStalls.icon),
