@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:yatrigan/src/controller/main/ir/ir_ctrl_api.dart';
+import 'package:yatrigan/src/controller/main/ir/ir_ctrl_model.dart';
 
 import 'ir_ctrl_db.dart';
-import 'ir_ctrl_model.dart';
 
-class IrCtrl extends ChangeNotifier with IrCtrlModel {
+class IrCtrl  extends IrCtrlModel {
   final IrCtrlApi _api = IrCtrlApi();
   final IrCtrlDb _db = IrCtrlDb();
 

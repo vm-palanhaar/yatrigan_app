@@ -4,7 +4,7 @@ import 'package:yatrigan/src/model/main/product/product_details_images_model.dar
 import 'product_catalog_ctrl_api.dart';
 import 'product_catalog_ctrl_model.dart';
 
-class PcCtrl extends ChangeNotifier with PcCtrlModel {
+class PcCtrl extends PcCtrlModel {
   final PcCtrlApi _api = PcCtrlApi();
 
   void _errorMsgApi() {

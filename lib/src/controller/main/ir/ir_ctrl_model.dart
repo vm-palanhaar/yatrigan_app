@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:yatrigan/src/model/main/ir/helpline/ir_helpline_grp_mdl.dart';
 import 'package:yatrigan/src/model/main/ir/helpline/ir_helpline_mdl.dart';
 import 'package:yatrigan/src/model/main/ir/railstation/shop/ir_shop_inv_mdl.dart';
@@ -7,7 +8,7 @@ import 'package:yatrigan/src/model/main/ir/rail_stations_mdl.dart';
 import 'package:yatrigan/src/model/main/ir/trains_mdl.dart';
 import 'package:yatrigan/src/model/main/ir/trainschedule/train_schedule.dart';
 
-class IrCtrlModel {
+class IrCtrlModel extends ChangeNotifier{
   String errorMsg = '';
 
   RailStationsMdl railStations = RailStationsMdl(
