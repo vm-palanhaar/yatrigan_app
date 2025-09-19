@@ -22,7 +22,7 @@ class _InternetScreenState extends State<InternetScreen> {
           Navigator.pop(context);
         });
       }
-    });
+    } as void Function(List<ConnectivityResult> event)?);
   }
 
   @override
